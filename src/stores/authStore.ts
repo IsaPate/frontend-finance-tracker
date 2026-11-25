@@ -1,9 +1,11 @@
 import { axiosService } from "@/axios/AxiosService";
-import type { Role, User } from "@/types/user";
+import type { AxiosResponse } from "@/types/api";
+import type { AuthUser, LoginData, User } from "@/types/user";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 // Ο τύπος ΟΛΟΥ του store: τι state κρατάει + ποιες functions (actions) έχει.
 // Σκέψου το σαν interface μιας Java κλάσης: πεδία + μέθοδοι.
+
 type AuthState = {
   // --- state ---
   token: string | null; // null = δεν είναι συνδεδεμένος
@@ -20,18 +22,14 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       user: null,
       login: async (email: string, password: string) => {
-        const response = await axiosService.post<{
-          token: string;
-          user: {
-            name: string;
-            email: string;
-            role: Role;
-          };
-        }>("/auth/login", {
-          email,
-          password,
-        });
-        const { user, token } = response.data;
+        const response = await axiosService.post<AxiosResponse<LoginData>>(
+          "/auth/login",
+          {
+            email,
+            password,
+          }
+        );
+        const { token, user } = response.data.data;
         set({ token, user });
       },
       logout: () => {
@@ -42,16 +40,15 @@ export const useAuthStore = create<AuthState>()(
         userEmail: string,
         userPassword: string
       ) => {
-        const response = await axiosService.post<{
-          name: string;
-          email: string;
-          role: Role;
-        }>("/auth/register", {
-          name: userName,
-          email: userEmail,
-          password: userPassword,
-        });
-        const { name, email, role } = response.data;
+        const response = await axiosService.post<AxiosResponse<AuthUser>>(
+          "/auth/register",
+          {
+            name: userName,
+            email: userEmail,
+            password: userPassword,
+          }
+        );
+        const { name, email, role } = response.data.data;
         set({ token: null, user: { name, email, role } });
       },
     }),
