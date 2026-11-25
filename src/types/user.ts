@@ -16,9 +16,5 @@ export type AuthUser = {
 
 export type LoginData = {
   token: string;
-  user: {
-    name: string;
-    email: string;
-    role: Role;
-  };
+  user: AuthUser;
 };
