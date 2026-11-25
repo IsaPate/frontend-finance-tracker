@@ -28,7 +28,7 @@ export class AxiosService {
   public responseInterceptor() {
     this.axios.interceptors.response.use(
       (response) => response,
-      (error) => error
+      (error) => Promise.reject(error)
     );
   }
 }
