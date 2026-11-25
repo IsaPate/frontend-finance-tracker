@@ -9,11 +9,15 @@ export class AxiosService {
       withCredentials: true,
     });
   }
-  public async get(url: string, config?: AxiosRequestConfig) {
-    return await this.axios.get(url, config);
+  public async get<T>(url: string, config?: AxiosRequestConfig) {
+    return await this.axios.get<T>(url, config);
   }
-  public async post(url: string, data: unknown, config?: AxiosRequestConfig) {
-    return await this.axios.post(url, data, config);
+  public async post<T>(
+    url: string,
+    data: unknown,
+    config?: AxiosRequestConfig
+  ) {
+    return await this.axios.post<T>(url, data, config);
   }
   public async put(url: string, data: unknown, config?: AxiosRequestConfig) {
     return await this.axios.put(url, data, config);
