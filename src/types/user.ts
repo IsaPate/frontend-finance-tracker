@@ -7,3 +7,18 @@ export type User = {
   email: string;
   role: Role;
 };
+
+export type AuthUser = {
+  name: string;
+  email: string;
+  role: Role;
+};
+
+export type LoginData = {
+  token: string;
+  user: {
+    name: string;
+    email: string;
+    role: Role;
+  };
+};
