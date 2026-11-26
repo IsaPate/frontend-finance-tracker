@@ -1,10 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuthStore } from "@/stores/authStore";
 import { Wallet } from "lucide-react";
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 
 export default function RegisterPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState<string | null>(null);
+  const register = useAuthStore((state) => state.register);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErr(null);
+    try {
+      await register(name, password, email);
+      navigate("/login");
+    } catch (error) {
+      console.error(err);
+      setErr(error);
+    }
+  };
+
   return (
     <main className="grid min-h-svh place-items-center px-5 py-12">
       <div className="flex w-full max-w-[400px] flex-col gap-3">
@@ -15,7 +36,11 @@ export default function RegisterPage() {
         <h1 id="register-h" className="text-[26px] font-semibold ">
           Register
         </h1>
-        <form aria-labelledby="register-h" className="flex flex-col gap-5">
+        <form
+          aria-labelledby="register-h"
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -23,6 +48,8 @@ export default function RegisterPage() {
               type="text"
               autoComplete="name"
               className="h-11 bg-card"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -33,6 +60,10 @@ export default function RegisterPage() {
               type="email"
               autoComplete="username"
               className="h-11 bg-card"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -52,6 +83,8 @@ export default function RegisterPage() {
               type="password"
               autoComplete="new-password"
               className="h-11 bg-card"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <div className="flex items-baseline justify-between">
               <p className="text-[13px] text-muted-foreground">
