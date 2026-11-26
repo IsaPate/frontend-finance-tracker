@@ -36,7 +36,7 @@ export default function ResetPassword() {
           </div>
           <div className="flex flex-col gap-1.5">
             <div className="flex items-baseline justify-between">
-              <Label htmlFor="password">Verify Password</Label>
+              <Label htmlFor="confirm-password">Verify Password</Label>
               <Button
                 type="button"
                 variant="link"
@@ -47,14 +47,14 @@ export default function ResetPassword() {
               </Button>
             </div>
             <Input
-              id="password"
+              id="confirm-password"
               type="password"
               autoComplete="new-password"
               className="h-11 bg-card"
             />
           </div>
           <Button type="submit" className="h-11 text-[15px] font-semibold">
-            Send code
+            Save password
           </Button>
         </form>
       </div>
