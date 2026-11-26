@@ -6,8 +6,8 @@ import { CategoriesPage } from "./pages/CategoriesPage";
 import { RequireAuth } from "./components/RequireAuth";
 import { LoginPage } from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import ForgotPassword from "./pages/forgot-passowrd/ForgotPassword";
-import ResetPassword from "./pages/forgot-passowrd/ResetPassword";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
+import ResetPassword from "./pages/forgot-password/ResetPassword";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
