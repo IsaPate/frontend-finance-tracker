@@ -12,7 +12,7 @@ type AuthState = {
   user: Omit<User, "id"> | null;
 
   // --- actions ---
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<AuthUser>;
   logout: () => void;
   register: (name: string, password: string, email: string) => Promise<void>;
 };
@@ -31,6 +31,7 @@ export const useAuthStore = create<AuthState>()(
         );
         const { token, user } = response.data.data;
         set({ token, user });
+        return user;
       },
       logout: () => {
         set({ token: null, user: null });
