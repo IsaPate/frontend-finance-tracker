@@ -20,8 +20,8 @@ export default function RegisterPage() {
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
-              type="name"
-              autoComplete="username"
+              type="text"
+              autoComplete="name"
               className="h-11 bg-card"
             />
           </div>
@@ -50,7 +50,7 @@ export default function RegisterPage() {
             <Input
               id="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               className="h-11 bg-card"
             />
             <div className="flex items-baseline justify-between">
@@ -66,7 +66,7 @@ export default function RegisterPage() {
             </div>
           </div>
           <Button type="submit" className="h-11 text-[15px] font-semibold">
-            Sign In
+            Create account
           </Button>
         </form>
       </div>
