@@ -7,11 +7,13 @@ import { RequireAuth } from "./components/RequireAuth";
 import { LoginPage } from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ForgotPassword from "./pages/forgot-passowrd/ForgotPassword";
+import ResetPassword from "./pages/forgot-passowrd/ResetPassword";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/reset-password", element: <ResetPassword /> },
 
   {
     path: "/admin",
