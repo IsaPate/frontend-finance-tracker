@@ -18,7 +18,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setErr(null);
     try {
-      await register(name, password, email);
+      await register(name, email, password);
       navigate("/login");
     } catch (error) {
       console.error(err);
