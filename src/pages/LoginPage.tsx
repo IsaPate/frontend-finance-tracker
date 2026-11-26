@@ -2,9 +2,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Wallet } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useState } from "react";
+import { useAuthStore } from "@/stores/authStore";
 
 export function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState<string | null>(null);
+  const login = useAuthStore((state) => state.login);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErr(null);
+    try {
+      const authUser = await login(email, password);
+      if (authUser.role === "ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
+    } catch (error) {
+      console.error(err);
+      setErr(error);
+    }
+  };
   return (
     <main className="grid min-h-svh place-items-center px-5 py-12">
       <div className="flex w-full max-w-[400px] flex-col gap-3">
@@ -15,7 +39,11 @@ export function LoginPage() {
         <h1 id="signin-h" className="text-[26px] font-semibold ">
           Sign in
         </h1>
-        <form aria-labelledby="signin-h" className="flex flex-col gap-5">
+        <form
+          aria-labelledby="signin-h"
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -23,6 +51,10 @@ export function LoginPage() {
               type="email"
               autoComplete="username"
               className="h-11 bg-card"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -42,6 +74,8 @@ export function LoginPage() {
               type="password"
               autoComplete="current-password"
               className="h-11 bg-card"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <div className="flex items-baseline justify-between">
               <p className="text-[13px] text-muted-foreground">
